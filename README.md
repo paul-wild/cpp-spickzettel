@@ -1,5 +1,17 @@
 # C++-Spickzettel für Programmierwettbewerbe
 
+## 0) Header und Makros
+
+```
+      #include <bits/stdc++.h>                             // includes all (!) libraries
+      using namespace std;
+
+      using ll = long long;
+      const ll oo = 0x3f3f3f3f3f3f3f3f;                    // "infinity"
+      #define FOR(i,a,b) for (int i = (a); i < (b); i++)
+      #define all(c) begin(c),end(c)
+```
+
 ## 1) Listen und Arrays
 
 * Dynamisches Array:
@@ -56,7 +68,7 @@
 
 ```  
       vector<bitset<1000>> reach(n);
-      for (auto e: edges) reach[e.xx][e.yy] = 1;
+      for (auto [x,y]: edges) reach[x][y] = 1;
 
       FOR(i,0,n) reach[i][i] = 1;
 
@@ -93,8 +105,7 @@ https://en.cppreference.com/w/cpp/container/priority_queue
 
       sort(all(pairs));               // (a,3), (b,1), (b,2), (c,2)
 
-      char x; int y;
-      tie(x,y) = pairs[2];            // x = 'b', y = 2
+      auto [x,y] = pairs[2];          // x = 'b', y = 2
 ```
 
 * https://en.cppreference.com/w/cpp/utility/tuple
@@ -144,8 +155,8 @@ Frequency Table mit `map`:
       string s;
       while (cin >> s) cnt[s]++; // operator[] adds elements if needed
 
-      for (auto pr: cnt) {
-          cout << pr.xx << " occurs " << pr.yy << " times" << endl;
+      for (auto [x,k]: cnt) {
+          cout << x << " occurs " << k << " times" << endl;
       }
 ```
 
@@ -389,13 +400,41 @@ Zweier-Logarithmus (abgerundet):
       cout << power(7LL,20) << endl;     // --> 79792266297612001
 ```
 
-* Größter gemeinsamer Teiler:
+* Größter gemeinsamer Teiler und kleinstes gemeinsames Vielfaches:
 
 ```    
-      cout << __gcd(4,6) << endl; // 2
+      cout << gcd(4,6) << endl; // 2
+      cout << lcm(4,6) << endl; // 12
 ```
 
-## 12) I/O
+## 12) Lambda-Ausdrücke
+
+* Funktion, um Strings eindeutige IDs mittels einer Map zuzuordnen:
+
+```
+      map<string,int> id;
+      int K = 0;
+      auto get_id = [&](string s) {
+        if (!id.count(s)) id[s] = K++;
+        return id[s];
+      };
+```
+
+* Tiefensuche mit rekursivem Lambda:
+
+```
+      vector<vector<int>> adj;
+      vector<bool> reach;
+      auto dfs = [&](const auto &self, int i) {
+        reach[i] = 1;
+        for (int j: adj[i]) {
+          if (!reach[j]) self(self, j);
+        }
+      };
+      dfs(dfs, 0);
+```
+
+## 13) I/O
 
 * Zahl mit gewünschter Anzahl Nachkommastellen ausgeben:
 
@@ -406,8 +445,7 @@ Zweier-Logarithmus (abgerundet):
 * Schnelleres I/O:
 
 ```      
-      ios_base::sync_with_stdio(false);
-      cin.tie(NULL);
+      cin.tie(0)->sync_with_stdio(0);
 ```
 
 * https://en.cppreference.com/w/cpp/string/basic_string/to_string
@@ -416,7 +454,7 @@ Zweier-Logarithmus (abgerundet):
 
 ```
       string a = "1234";
-      ll b = stol(a);
+      ll b = stoll(a);
       string c = to_string(b);
 ```
 
@@ -435,7 +473,7 @@ Zweier-Logarithmus (abgerundet):
       while (ss >> x) v.push_back(x);
 ```
 
-## 13) Sonstiges
+## 14) Sonstiges
 
 * Arrays füllen:
 
@@ -446,6 +484,6 @@ Zweier-Logarithmus (abgerundet):
       ll dp2[100];
       fill_n(dp2, 50, 42); // fill half of dp2 with 42
 
-      vector<pll> v;
+      vector<pair<int,int>> v;
       v.assign(100, {-1,-1}); // change size and fill
 ```
