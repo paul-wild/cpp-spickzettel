@@ -2,7 +2,7 @@
 
 ## 0) Header und Makros
 
-```
+```cpp
       #include <bits/stdc++.h>                             // includes all (!) libraries
       using namespace std;
 
@@ -18,7 +18,7 @@
 
   https://en.cppreference.com/w/cpp/container/vector
 
-```
+```cpp
       vector<vector<int>> dp(n,vector<int>(k,oo));
 
       vector<int> v;
@@ -47,7 +47,7 @@
 
     Die anderen Datenstrukturen sind nur Wrapper um `deque`.
 
-  ```
+  ```cpp
         deque<int> q = {7,1,3};
         q.push_front(4);
         q.push_back(5);
@@ -66,7 +66,7 @@
   Beispiel: transitive Hülle in einem Graphen via Floyd-Warshall,
   um Faktor 64 schneller:
 
-```  
+```cpp
       vector<bitset<1000>> reach(n);
       for (auto [x,y]: edges) reach[x][y] = 1;
 
@@ -84,7 +84,7 @@
 
 https://en.cppreference.com/w/cpp/container/priority_queue
 
-```
+```cpp
       priority_queue<int> q1;
       q1.insert(2), q1.insert(3);
       cout << q1.top() << endl;       // get maximum --> 3
@@ -100,7 +100,7 @@ https://en.cppreference.com/w/cpp/container/priority_queue
 
 * https://en.cppreference.com/w/cpp/utility/pair
 
-```
+```cpp
       vector<pair<char,int>> pairs = {{'b',2},{'b',1},{'a',3},{'c',2}};
 
       sort(all(pairs));               // (a,3), (b,1), (b,2), (c,2)
@@ -110,7 +110,7 @@ https://en.cppreference.com/w/cpp/container/priority_queue
 
 * https://en.cppreference.com/w/cpp/utility/tuple
 
-```
+```cpp
       tuple<int,char,string> tpl = make_tuple(42,'x',"foo");
 
       cout << get<1>(tpl) << endl;       // 'x'
@@ -118,7 +118,7 @@ https://en.cppreference.com/w/cpp/container/priority_queue
 
 * https://en.cppreference.com/w/cpp/container/array
 
-```
+```cpp
       set<array<int,4>> states;
       states.insert({0,1,2,3});
 ```
@@ -127,7 +127,7 @@ https://en.cppreference.com/w/cpp/container/priority_queue
 
 * https://en.cppreference.com/w/cpp/container/set
 
-```
+```cpp
       set<int> s = {1,2,3};
       s.insert(2);
       s.erase(2);
@@ -150,7 +150,7 @@ https://en.cppreference.com/w/cpp/container/priority_queue
 
 Frequency Table mit `map`:
 
-```
+```cpp
       map<string,int> cnt;
       string s;
       while (cin >> s) cnt[s]++; // operator[] adds elements if needed
@@ -165,7 +165,7 @@ Wichtige Funktionen: `count()`, `erase()`, `insert()`, `find()`, `lower_bound()`
 
 * https://en.cppreference.com/w/cpp/container/multiset
 
-```
+```cpp
     multiset<int> s = {1,2,2,2,3};
 
     // erase single occurrence of 2:
@@ -177,7 +177,7 @@ Wichtige Funktionen: `count()`, `erase()`, `insert()`, `find()`, `lower_bound()`
 
 * Order statistics tree:
 
-```
+```cpp
       #include <bits/extc++.h>
       using namespace __gnu_pbds;
 
@@ -204,13 +204,13 @@ Operationen sind zwar O(1) statt O(log n), aber mit hohem konstanten Faktor.
 
 * Absteigend sortieren:
 
-```    
+```cpp
       sort(all(v),greater<int>());
 ```
 
 * Sortieren mit Lambda:
 
-```      
+```cpp
       sort(all(v),[&](int x, int y) {
           if (x%2 != y%2) return x%2 < y%2;
           return x < y;
@@ -219,47 +219,47 @@ Operationen sind zwar O(1) statt O(log n), aber mit hohem konstanten Faktor.
 
 * Duplikate entfernen:
 
-```    
+```cpp
       sort(all(v));
       v.erase(unique(all(v)),end(v));
 ```
 
 * https://en.cppreference.com/w/cpp/algorithm/swap
 
-```
+```cpp
       string a  = "abc", b = "def";
       swap(a,b);
 ```
 
 * https://en.cppreference.com/w/cpp/algorithm/is_sorted
 
-```
+```cpp
       vector<int> a = {3,1,4,1,5};
       cout << is_sorted(all(a)) << endl;      // --> 0
 ```
 
 * https://en.cppreference.com/w/cpp/algorithm/accumulate
 
-```      
+```cpp
       ll sum_v = accumulate(all(v),0LL); // careful with overflow!
       ll product_v = accumulate(all(v),1LL,multiplies<ll>());
 ```
 
 * https://en.cppreference.com/w/cpp/algorithm/max_element
 
-```      
+```cpp
       ll max_v = *max_element(all(v));
 ```
 
 * https://en.cppreference.com/w/cpp/algorithm/rotate
 
-```      
+```cpp
       rotate(begin(v),begin(v)+k,end(v)); // rotate v so that the element at index k moves to the front
 ```
 
 * https://en.cppreference.com/w/cpp/algorithm/copy
 
-```
+```cpp
       vector<int> a = {1,2,3}, b = {4,5,6};
       copy(all(b),back_inserter(a));         // append all of b to a
 ```
@@ -270,7 +270,7 @@ Operationen sind zwar O(1) statt O(log n), aber mit hohem konstanten Faktor.
 
   Über alle Permutationen iterieren:
 
-```      
+```cpp
       vector<int> v(n);
       iota(all(v),0);
       do {
@@ -288,7 +288,7 @@ Operationen sind zwar O(1) statt O(log n), aber mit hohem konstanten Faktor.
 
   Achtung: auf `set`/`map` immer `s.lower_bound(x)` statt `lower_bound(all(s),x)` verwenden!
 
-```
+```cpp
       vector<int> a = {1,3,5,5,6,10};
       cout << lower_bound(all(a),5) - begin(a) << endl; // --> 2
       cout << upper_bound(all(a),5) - begin(a) << endl; // --> 4
@@ -298,7 +298,7 @@ Operationen sind zwar O(1) statt O(log n), aber mit hohem konstanten Faktor.
 
   https://en.cppreference.com/w/cpp/algorithm/find
 
-```
+```cpp
       vector<int> a = {5,2,4,3,1};
       cout << find(all(a),4) - begin(a) << endl;       // --> 2
 ```
@@ -309,7 +309,7 @@ Operationen sind zwar O(1) statt O(log n), aber mit hohem konstanten Faktor.
 
   https://en.cppreference.com/w/cpp/iterator/next
 
-```      
+```cpp
       set<int> s = {3,11,19};
       auto it = s.upper_bound(x);
       if (it != end(s) && it != begin(s)) cout << *it - *prev(it) << endl;
@@ -322,7 +322,7 @@ Operationen sind zwar O(1) statt O(log n), aber mit hohem konstanten Faktor.
 
   https://en.cppreference.com/w/cpp/iterator/rend
 
-```
+```cpp
       vector<int> a = {1,2,3,4};
       for (auto it = a.rbegin(); it != a.rend(); it++) {
           cout << *it << endl;                              // --> 4,3,2,1
@@ -333,7 +333,7 @@ Operationen sind zwar O(1) statt O(log n), aber mit hohem konstanten Faktor.
 
 * Zufallszahlengenerator:
 
-```
+```cpp
       random_device rd;
       mt19937_64 gen1(42);         // fixed seed, same values on every run
       mt19937_64 gen2(rd());       // different seed on every run
@@ -341,14 +341,14 @@ Operationen sind zwar O(1) statt O(log n), aber mit hohem konstanten Faktor.
 
 * Zufallsverteilungen:
 
-```
+```cpp
       uniform_int_distribution<ll> dis(a,b);     // both bounds inclusive
       FOR(i,0,10) cout << dis(gen1) << endl;
 ```
 
 ## 9) Bit-Hacks
 
-```
+```cpp
       ll mask = (1LL << 10) - 1;
 
       // Population count = number of 1 bits
@@ -360,7 +360,7 @@ Operationen sind zwar O(1) statt O(log n), aber mit hohem konstanten Faktor.
 
 Zweier-Logarithmus (abgerundet):
 
-```    
+```cpp
       ll ld(ll x) { return 63 - __builtin_clzll(x); }
 ```
 
@@ -377,7 +377,7 @@ Zweier-Logarithmus (abgerundet):
 
 * https://en.cppreference.com/w/cpp/numeric/math/hypot
 
-```
+```cpp
       cout << hypot(3,4) << endl;    // --> 5
 ```
 
@@ -385,13 +385,13 @@ Zweier-Logarithmus (abgerundet):
 
   https://en.cppreference.com/w/cpp/numeric/math/atan2
 
-```
+```cpp
       cout << atan2(y,x) << endl;
 ```
 
 * Potenzen von Ganzzahlen:
 
-```    
+```cpp
       #include <bits/extc++.h>
       using namespace __gnu_cxx;
 
@@ -402,7 +402,7 @@ Zweier-Logarithmus (abgerundet):
 
 * Größter gemeinsamer Teiler und kleinstes gemeinsames Vielfaches:
 
-```    
+```cpp
       cout << gcd(4,6) << endl; // 2
       cout << lcm(4,6) << endl; // 12
 ```
@@ -411,18 +411,21 @@ Zweier-Logarithmus (abgerundet):
 
 * Funktion, um Strings eindeutige IDs mittels einer Map zuzuordnen:
 
-```
+```cpp
       map<string,int> id;
       int K = 0;
       auto get_id = [&](string s) {
         if (!id.count(s)) id[s] = K++;
         return id[s];
       };
+      cout << get_id("abc") << endl;    // 0
+      cout << get_id("def") << endl;    // 1
+      cout << get_id("abc") << endl;    // 0
 ```
 
 * Tiefensuche mit rekursivem Lambda:
 
-```
+```cpp
       vector<vector<int>> adj;
       vector<bool> reach;
       auto dfs = [&](const auto &self, int i) {
@@ -438,13 +441,13 @@ Zweier-Logarithmus (abgerundet):
 
 * Zahl mit gewünschter Anzahl Nachkommastellen ausgeben:
 
-```      
+```cpp
       cout << fixed << setprecision(15) << M_PI << endl;   // --> 3.141592653589793
 ```
 
 * Schnelleres I/O:
 
-```      
+```cpp
       cin.tie(0)->sync_with_stdio(0);
 ```
 
@@ -452,7 +455,7 @@ Zweier-Logarithmus (abgerundet):
 
 * https://en.cppreference.com/w/cpp/string/basic_string/stol
 
-```
+```cpp
       string a = "1234";
       ll b = stoll(a);
       string c = to_string(b);
@@ -464,7 +467,7 @@ Zweier-Logarithmus (abgerundet):
 
   Folge von Zahlen aus Zeile einlesen:
 
-```      
+```cpp
       string line;
       getline(cin,line);
       stringstream ss(line);
@@ -477,7 +480,7 @@ Zweier-Logarithmus (abgerundet):
 
 * Arrays füllen:
 
-```
+```cpp
       ll dp1[100][100][100][2];
       memset(dp1, 0x3f, sizeof dp1); // fill dp1 with oo
 
