@@ -19,7 +19,7 @@
   https://en.cppreference.com/w/cpp/container/vector
 
 ```cpp
-      vector<vector<int>> dp(n,vector<int>(k,oo));
+      vector<vector<ll>> dp(n,vector<ll>(k,oo));
 
       vector<int> v;
       v.assign(n,-1);
@@ -428,7 +428,7 @@ Zweier-Logarithmus (abgerundet):
 ```cpp
       vector<vector<int>> adj;
       vector<bool> reach;
-      auto dfs = [&](const auto &self, int i) {
+      auto dfs = [&](const auto &self, int i) -> void {
         reach[i] = 1;
         for (int j: adj[i]) {
           if (!reach[j]) self(self, j);
